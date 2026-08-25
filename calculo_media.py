@@ -26,8 +26,22 @@ def main(pagina:ft.Page):
             contador_notas += 1
             resultado.value = round(soma_notas / contador_notas,2)
 
+    def excluir ():
+
+        copia_lista = lista_campos_notas.copy()
+        for x in copia_lista:
+            if x.caixa_selecao.value == True:
+                lista_campos_notas.remove(x)
+            
+
     botao_add = ft.FloatingActionButton(icon=ft.Icons.ADD,
                                         on_click=adicionar_campo_nota)
+
+    botao_excluir_notas = ft.FloatingActionButton(icon= ft.Icons.DELETE_FOREVER,
+                                                  on_click = excluir)
+
+    linha_botoes =  ft.Row(controls = [botao_add,botao_excluir_notas],
+                              alignment="center") #Linha de botões para adicionar nota e excluir nota
 
     coluna_notas = ft.Column(controls=lista_campos_notas,
                              expand=True,
@@ -39,13 +53,16 @@ def main(pagina:ft.Page):
                                on_click=calcular_media)
 
     resultado = ft.TextField(value=0,
-                             read_only=True)
+                             read_only=True,
+                             )
 
     
         
 
     linha_resultado = ft.Row(controls=[botao_calcular,resultado],
-                             alignment="center")
+                             alignment="center",
+                             width = 440)
+
 
     container_resultado = ft.Container(content=linha_resultado,
                                        bgcolor = "#85d2ff",
@@ -53,10 +70,9 @@ def main(pagina:ft.Page):
                                     border = ft.Border.all(2),
                                     border_radius = 10,
                                     )
-
     
     pagina.controls = [titulo,
-                       botao_add,
+                       linha_botoes,
                        coluna_notas,
                        container_resultado,
                        ]
